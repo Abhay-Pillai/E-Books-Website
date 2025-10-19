@@ -23,16 +23,16 @@ razorpay_client = razorpay.Client(auth=(
 ))
 
 # MySQL connection
-def get_db_connection():
+'''def get_db_connection():
     return mysql.connector.connect(
         host="localhost",
         user="root",
         password="Abh@y2005",
         database="bookstore"
-    )
+    )'''
 
 
-'''def get_db_connection():
+def get_db_connection():
     connection = mysql.connector.connect(
         host=os.getenv("DB_HOST"),
         port=int(os.getenv("DB_PORT", 3306)),
@@ -40,7 +40,7 @@ def get_db_connection():
         password=os.getenv("DB_PASS"),
         database=os.getenv("DB_NAME")
     )
-    return connection'''
+    return connection
 
 
 @app.route("/")
@@ -1384,7 +1384,7 @@ def move_to_cart():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)    # For production, use PORT from environment (e.g., Heroku)
-    '''import os
+    '''app.run(debug=True)'''    # For production, use PORT from environment (e.g., Heroku)
+    import os
     port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)'''
+    app.run(host="0.0.0.0", port=port)
