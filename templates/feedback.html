@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Encore Library | Feedback</title>
+
+  <style>
+    /* ---------------------------------------------------- */
+    /* 🌍 GLOBAL RESET — Safe universal setup */
+    /* ---------------------------------------------------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* ---------------------------------------------------- */
+    /* 🟢 MAIN SITE HEADER (Navbar Section) */
+    /* ---------------------------------------------------- */
+    .site-header .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #333;
+      color: white;
+      padding: 10px 20px;
+    }
+
+    .site-header .logo {
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .site-header .menu {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+    }
+
+    .site-header .menu li {
+      position: relative;
+    }
+
+    .site-header .menu li a {
+      color: white;
+      text-decoration: none;
+      padding: 10px 15px;
+      display: block;
+    }
+
+    .site-header .menu li:hover {
+      background: #444;
+    }
+
+    /* Dropdown menu */
+    .site-header .dropdown-menu {
+      display: none;
+      position: absolute;
+      background: #444;
+      top: 100%;
+      left: 0;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      min-width: 220px;
+      z-index: 10;
+    }
+
+    .site-header .dropdown-menu li a {
+      padding: 10px;
+      display: block;
+      color: white;
+    }
+
+    .site-header .dropdown-menu li a:hover {
+      background: #555;
+    }
+
+    .site-header .dropdown:hover .dropdown-menu {
+      display: block;
+    }
+
+    /* Logo + search area */
+    .site-header .search-cart {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .site-header .search-cart input {
+      padding: 5px 10px;
+      border-radius: 5px;
+      border: none;
+    }
+
+    .site-header .search-cart button {
+      margin-left: 5px;
+      padding: 6px 10px;
+      border: none;
+      background: crimson;
+      color: white;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .site-header .search-cart a {
+      margin-left: 15px;
+      color: white;
+      text-decoration: none;
+    }
+
+    /* Dropdown container inside search-cart */
+    .site-header .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .site-header .dropbtn {
+      cursor: pointer;
+      text-decoration: none;
+      padding: 8px 12px;
+      display: inline-block;
+    }
+
+    .site-header .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #fff;
+      min-width: 180px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      border-radius: 6px;
+      z-index: 1000;
+    }
+
+    .site-header .dropdown-content a {
+      color: #333;
+      padding: 10px 14px;
+      text-decoration: none;
+      display: block;
+    }
+
+    .site-header .dropdown-content a:hover {
+      background-color: #f2f2f2;
+    }
+
+    .site-header .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    /* Search Suggestions Dropdown */
+    .site-header .suggestions {
+      position: absolute;
+      top: 42px;
+      left: 0;
+      width: 240px;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      z-index: 9999;
+      display: none;
+      max-height: 250px;
+      overflow-y: auto;
+    }
+
+    .site-header .suggestions li {
+      padding: 8px 10px;
+      cursor: pointer;
+      font-size: 14px;
+      color: #333;
+      transition: background 0.2s ease;
+    }
+
+    .site-header .suggestions li:hover {
+      background: #f2f2f2;
+    }
+
+    /* ============================= */
+    /* 🎯 FEEDBACK PAGE STYLING ONLY */
+    /* ============================= */
+    .feedback-wrapper {
+      background: #f8f9fa;  /* light gray background */
+      padding: 40px 0;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Blue Header Bar for Feedback */
+    .feedback-wrapper .feedback-header {
+      background-color: #007bff;
+      color: white;
+      text-align: center;
+      padding: 15px 0;
+      font-size: 22px;
+      font-weight: bold;
+      border-radius: 4px;
+    }
+
+    /* Centered white card */
+    .feedback-wrapper main {
+      max-width: 900px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 40px 50px;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Headings and paragraph */
+    .feedback-wrapper h2 {
+      text-align: center;
+      color: #2c3e50;
+      margin-bottom: 8px;
+      font-size: 24px;
+    }
+
+    .feedback-wrapper p {
+      text-align: center;
+      color: #555;
+      margin-bottom: 25px;
+      font-size: 15px;
+    }
+
+    /* Labels and inputs */
+    .feedback-wrapper label {
+      font-weight: bold;
+      display: block;
+      margin-top: 15px;
+      color: #333;
+      font-size: 14px;
+    }
+
+    .feedback-wrapper input[type="text"],
+    .feedback-wrapper input[type="email"],
+    .feedback-wrapper textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+
+    .feedback-wrapper input[readonly] {
+      background-color: #f3f3f3;
+      color: #777;
+      cursor: not-allowed;
+    }
+
+    /* ⭐ Star Rating */
+    .feedback-wrapper .rating-section {
+      text-align: center;
+      margin: 25px 0;
+    }
+
+    .feedback-wrapper .rating-section h3 {
+      font-size: 18px;
+      color: #222;
+      margin-bottom: 10px;
+    }
+
+    .feedback-wrapper .stars {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: center;
+      margin: 10px 0 20px;
+    }
+
+    .feedback-wrapper .stars input {
+      display: none;
+    }
+
+    .feedback-wrapper .stars label {
+      font-size: 32px;
+      color: #ccc;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .feedback-wrapper .stars input:checked ~ label {
+      color: gold;
+    }
+
+    .feedback-wrapper .stars label:hover,
+    .feedback-wrapper .stars label:hover ~ label {
+      color: gold;
+    }
+
+    /* 🧠 Question Section */
+    .feedback-wrapper .question {
+      margin-top: 25px;
+    }
+
+    .feedback-wrapper .question h4 {
+      font-size: 16px;
+      margin-bottom: 8px;
+      color: #333;
+    }
+
+    .feedback-wrapper .options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      font-size: 14px;
+    }
+
+    .feedback-wrapper .options label {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+    }
+
+    /* 🟢 Submit Button */
+    .feedback-wrapper #submitFeedback {
+      margin-top: 25px;
+      padding: 12px 20px;
+      background-color: #28a745;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 16px;
+      width: 100%;
+      transition: background 0.3s;
+    }
+
+    .feedback-wrapper #submitFeedback:hover {
+      background-color: #218838;
+    }
+    /* ---------------------------------------------------- */
+    /* ⚫ SITE FOOTER (Isolated from feedback) */
+    /* ---------------------------------------------------- */
+    .site-footer .footer {
+      font-size: 16px;
+    }
+
+    .site-footer .footer-top {
+      background: #f9c32c;
+      color: black;
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      padding: 40px 20px;
+    }
+
+    .site-footer .footer-box {
+      width: 250px;
+      margin: 15px 0;
+    }
+
+    .site-footer .footer-box h3 {
+      margin-bottom: 15px;
+      font-size: 24px;
+    }
+
+    .site-footer .footer-box ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .site-footer .footer-box ul li {
+      margin-bottom: 8px;
+    }
+
+    .site-footer .footer-box ul li a,
+    .site-footer .footer-box p a {
+      color: black;
+      text-decoration: none;
+    }
+
+    .site-footer .footer-box p {
+      margin-bottom: 8px;
+    }
+
+    /* Black Copyright Bar */
+    .site-footer .footer-bottom {
+      background: #1a1a1a;
+      color: white;
+      text-align: center;
+      padding: 15px 10px;
+      font-size: 20px;
+    }
+
+  </style>
+</head>
+<body>
+  <!-- 🌐 Main Site Navbar -->
+  <header class="site-header">
+    <div class="navbar">
+      <div class="logo">Encore Library</div>
+      <ul class="menu">
+        <li><a href="{{ url_for('home') }}">Home</a></li>
+        <li class="dropdown">
+          <a href="#">Book Category ▼</a>
+          <ul class="dropdown-menu">
+            <li><a href="{{ url_for('computer') }}">Computer Engineering</a></li>
+            <li><a href="{{ url_for('electronics') }}">Electronics Engineering</a></li>
+            <li><a href="{{ url_for('mechanical') }}">Mechanical Engineering</a></li>
+            <li><a href="{{ url_for('it') }}">Information Technology</a></li>
+            <li><a href="{{ url_for('civil') }}">Civil Engineering</a></li>
+            <li><a href="{{ url_for('aerospace') }}">Aerospace Engineering</a></li>
+            <li><a href="{{ url_for('chemical') }}">Chemical Engineering</a></li>
+            <li><a href="{{ url_for('automobile') }}">Automobile Engineering</a></li>
+            <li><a href="{{ url_for('biomedical') }}">Biomedical Engineering</a></li>
+          </ul>
+        </li>
+        <li><a href="{{ url_for('about') }}">About Us</a></li>
+        <li><a href="{{ url_for('faqs') }}">FAQs</a></li>
+        <li><a href="{{ url_for('feedback') }}">Feedback</a></li>
+      </ul>
+
+      <div class="search-cart">
+        <input type="text" id="searchInput" placeholder="Search book here" autocomplete="off">
+        <button id="searchBtn">🔍</button>
+        <ul id="suggestionsList" class="suggestions"></ul>
+
+        <div class="dropdown">
+          <a href="{{ url_for('profile') }}" class="dropbtn">My Account ▼</a>
+          <div class="dropdown-content">
+            <a href="{{ url_for('profile') }}">My Profile</a>
+            <a href="{{ url_for('dashboard') }}">My Dashboard</a>
+            <a href="{{ url_for('wishlist') }}">My Wishlist</a>
+            <a href="{{ url_for('orders') }}">My Orders</a>
+            <a href="{{ url_for('change_password') }}">Change Password</a>
+            <a href="{{ url_for('logout') }}">Sign Out</a>
+          </div>
+        </div>
+
+        <a href="{{ url_for('cart') }}">My Cart</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 💬 Feedback Page Content (your existing one) -->
+  <div class="feedback-wrapper">
+    <header class="feedback-header">Encore Library Feedback 📚</header>
+
+    <main>
+      <h2>We Value Your Feedback</h2>
+      <p>Your insights help us improve our website and your reading experience!</p>
+
+      <form id="feedbackForm">
+        <!-- 🧾 Name -->
+        <label for="name">Full Name:</label>
+        <input type="text" id="name" placeholder="Your full name" required>
+
+        <!-- 📧 Email -->
+        <label for="email">Email:</label>
+        <input type="email" id="email" readonly>
+
+        <!-- ⭐ Website Rating -->
+        <div class="rating-section">
+          <h3>⭐ How would you rate our website — Encore Library?</h3>
+          <div class="stars">
+            <input type="radio" id="star5" name="rating" value="5" required><label for="star5">★</label>
+            <input type="radio" id="star4" name="rating" value="4"><label for="star4">★</label>
+            <input type="radio" id="star3" name="rating" value="3"><label for="star3">★</label>
+            <input type="radio" id="star2" name="rating" value="2"><label for="star2">★</label>
+            <input type="radio" id="star1" name="rating" value="1"><label for="star1">★</label>
+          </div>
+        </div>
+
+        <!-- 🧠 Question 1 -->
+        <div class="question">
+          <h4>1. How would you rate the eBook content quality?</h4>
+          <div class="options">
+            <label><input type="radio" name="content" value="Outstanding" required> Outstanding</label>
+            <label><input type="radio" name="content" value="Excellent"> Excellent</label>
+            <label><input type="radio" name="content" value="Good"> Good</label>
+            <label><input type="radio" name="content" value="Average"> Average</label>
+            <label><input type="radio" name="content" value="Bad"> Bad</label>
+          </div>
+        </div>
+
+        <!-- 🧠 Question 2 -->
+        <div class="question">
+          <h4>2. How was the website’s design and readability?</h4>
+          <div class="options">
+            <label><input type="radio" name="ui" value="Outstanding" required> Outstanding</label>
+            <label><input type="radio" name="ui" value="Excellent"> Excellent</label>
+            <label><input type="radio" name="ui" value="Good"> Good</label>
+            <label><input type="radio" name="ui" value="Average"> Average</label>
+            <label><input type="radio" name="ui" value="Bad"> Bad</label>
+          </div>
+        </div>
+
+        <!-- 💡 Suggestions -->
+        <label for="feedbackText">Suggestions / Comments:</label>
+        <textarea id="feedbackText" placeholder="Share your suggestions..." rows="4" required></textarea>
+
+        <!-- Submit -->
+        <button type="submit" id="submitFeedback">Submit Feedback</button>
+      </form>
+    </main>
+  </div>
+
+  <!-- 🌐 Main Site Footer -->
+  <footer class="site-footer">
+    <div class="footer-top">
+      <div class="footer-box">
+        <h3>Engineering Book Store</h3>
+        <p>Engineering Book store is an online web application where customers can purchase engineering books online.</p>
+      </div>
+
+      <div class="footer-box">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="#">Book Category</a></li>
+          <li><a href="#">FAQs</a></li>
+          <li><a href="#">Contact Us</a></li>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Terms and Conditions</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-box">
+        <h3>Contact Details</h3>
+        <p>📍 New Panvel, Maharashtra, India</p>
+        <p>📞 +92 3092367312</p>
+        <p>✉️ onlinebookstore@gmail.com</p>
+      </div>
+
+      <div class="footer-box">
+        <h3>Follow Us</h3>
+        <p><a href="#">📘 facebook.com/Online_Book_Store</a></p>
+        <p><a href="#">📸 instagram.com/onlinebookstore</a></p>
+        <p><a href="#">🐦 twitter.com/online_Book_Store</a></p>
+        <p><a href="#">▶️ youtube.com/OnlineBookStore</a></p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="copyright">© CopyRight 2025 Online Book Store. All Right Reserved</p>
+    </div>
+  </footer>
+</body>
+  
+
+  <!-- Flask session email -->
+  <script id="session-data" type="application/json">
+    {{ session_email | tojson }}
+  </script>
+
+  <!-- ✅ JavaScript Logic -->
+  <script>
+    const form = document.getElementById("feedbackForm");
+    const emailInput = document.getElementById("email");
+
+    // Fetch email from Flask session
+    const sessionEmail = JSON.parse(
+      document.getElementById("session-data").textContent
+    );
+
+    // Auto-fill email or redirect if not logged in
+    if (sessionEmail) {
+      emailInput.value = sessionEmail;
+    } else {
+      alert("⚠️ Please login first to give feedback!");
+      window.location.href = "/login";
+    }
+
+    // Form submission
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value.trim();
+      const email = emailInput.value;
+      const rating = document.querySelector('input[name="rating"]:checked')?.value;
+      const content = document.querySelector('input[name="content"]:checked')?.value;
+      const ui = document.querySelector('input[name="ui"]:checked')?.value;
+      const feedback = document.getElementById("feedbackText").value.trim();
+
+      if (!name || !rating || !content || !ui || !feedback) {
+        alert("⚠️ Complete all the fields");
+        return;
+      }
+
+      // Optional: send to backend
+      console.log("📩 Feedback submitted:", { name, email, rating, content, ui, feedback });
+
+      alert("🎉 Thank you for your valuable feedback!");
+      window.location.href = "/home"; // redirect after success
+    });
+
+    const searchInput = document.getElementById("searchInput");
+    const searchBtn = document.getElementById("searchBtn");
+    const suggestionsList = document.getElementById("suggestionsList");
+
+    // 🔍 Fetch suggestions dynamically
+    searchInput.addEventListener("input", async () => {
+      const query = searchInput.value.trim();
+
+      // Hide if too short
+      if (query.length < 2) {
+        suggestionsList.style.display = "none";
+        return;
+      }
+
+      try {
+        // ✅ Fetch from Flask JSON route
+        const res = await fetch(`/search_suggestions?query=${encodeURIComponent(query)}`);
+        const data = await res.json();
+
+        // Clear old suggestions
+        suggestionsList.innerHTML = "";
+
+        if (data.length > 0) {
+          data.forEach(book => {
+            const li = document.createElement("li");
+            li.textContent = book;
+
+            // ✅ When user clicks a suggestion
+            li.addEventListener("click", () => {
+              searchInput.value = book;
+              suggestionsList.style.display = "none";
+
+              // Redirect to Flask route to render HTML
+              window.location.href = `/search_suggestions?query=${encodeURIComponent(book)}&mode=page`;
+            });
+
+            suggestionsList.appendChild(li);
+          });
+
+          suggestionsList.style.display = "block";
+        } else {
+          suggestionsList.style.display = "none";
+        }
+
+      } catch (error) {
+        console.error("⚠️ Error fetching suggestions:", error);
+        suggestionsList.style.display = "none";
+      }
+    });
+
+    // ✅ Clicking search button
+    searchBtn.addEventListener("click", () => {
+      const book = searchInput.value.trim();
+      if (book) {
+        // Redirect to results page mode
+        window.location.href = `/search_suggestions?query=${encodeURIComponent(book)}&mode=page`;
+      } else {
+        alert("Please enter a book name to search!");
+      }
+    });
+
+    // ✅ Pressing Enter key
+    searchInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        const book = searchInput.value.trim();
+        if (book) {
+          window.location.href = `/search_suggestions?query=${encodeURIComponent(book)}&mode=page`;
+        } else {
+          alert("Please enter a book name to search!");
+        }
+      }
+    });
+
+    // ✅ Hide dropdown when clicking outside
+    document.addEventListener("click", (e) => {
+      if (!e.target.closest(".search-cart")) {
+        suggestionsList.style.display = "none";
+      }
+    });
+  </script>
+</body>
+</html>
